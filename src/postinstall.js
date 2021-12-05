@@ -32,7 +32,7 @@ fs.writeFileSync('.prettierrc', `{
 
 fs.writeFileSync('.eslintrc.js', `module.exports = {
   root: true,
-  extends: '@ainou/code-style',
+  extends: require.resolve('@ainou/code-style'),
   parserOptions: {
     // tsconfigRootDir: __dirname,
     // project: ['./tsconfig.eslint.json'],
