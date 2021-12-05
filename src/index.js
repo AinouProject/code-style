@@ -1,33 +1,32 @@
-require("@rushstack/eslint-patch/modern-module-resolution");
+require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
+  ignorePatterns: ['dist', 'node_modules', '!.eslintrc.js'],
   overrides: [
     {
-      files: ["*.{ts,tsx,mts,cts}"],
-      ignorePatterns: ['dist', 'node_modules', '!.eslintrc.js'],
+      files: ['*.{ts,tsx,mts,cts}'],
 
-      parser: require.resolve("@typescript-eslint/parser"),
+      parser: require.resolve('@typescript-eslint/parser'),
       parserOptions: {
-        project: ["**/tsconfig.json"],
-        projectFolderIgnoreList: ["**/node_modules/**"],
+        project: ['**/tsconfig.json'],
+        projectFolderIgnoreList: ['**/node_modules/**'],
       },
 
       plugins: [
-        "@typescript-eslint",
-        "simple-import-sort",
-        "react",
-        "react-hooks",
+        '@typescript-eslint',
+        'react',
+        'react-hooks',
       ],
       extends: [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:react-hooks/recommended",
-        require.resolve("eslint-config-prettier"),
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:react-hooks/recommended',
+        require.resolve('eslint-config-prettier'),
       ],
 
       rules: {
-        eqeqeq: "error",
+        eqeqeq: 'error',
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -46,20 +45,20 @@ module.exports = {
     },
 
     {
-      files: ["*.{js,mjs,cjs}"],
+      files: ['*.{js,mjs,cjs}'],
 
-      parser: require.resolve("@babel/eslint-parser"),
+      parser: require.resolve('@babel/eslint-parser'),
       parserOptions: {
         requireConfigFile: false,
       },
 
       extends: [
-        "eslint:recommended",
-        require.resolve("eslint-config-prettier"),
+        'eslint:recommended',
+        require.resolve('eslint-config-prettier'),
       ],
 
       rules: {
-        eqeqeq: "error",
+        eqeqeq: 'error',
       },
     },
   ],
