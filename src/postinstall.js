@@ -21,6 +21,7 @@ const settings = JSON.parse(fs.readFileSync('.vscode/settings.json').toString())
 settings['typescript.tsdk'] = './node_modules/typescript/lib'
 settings['editor.codeActionsOnSave'] = { 'source.fixAll': true }
 settings['editor.defaultFormatter'] = 'esbenp.prettier-vscode'
+settings['editor.formatOnSave'] = true
 
 fs.writeFileSync('.vscode/settings.json', JSON.stringify(settings, null, 2))
 
