@@ -1,9 +1,12 @@
-const { spawn } = require('child_process')
+#!/usr/bin/env node
+
+const { spawnSync } = require('child_process')
 const fs = require('fs')
 
-spawn('yarn', [
+spawnSync('yarn', [
   'add',
   '-D',
+  'eslint',
   '@typescript-eslint/parser',
   '@typescript-eslint/eslint-plugin',
   'prettier'
