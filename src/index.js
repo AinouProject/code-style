@@ -2,6 +2,20 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   ignorePatterns: ['dist', 'node_modules', '!.eslintrc.js'],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: {
+      impliedStrict: true,
+      jsx: true,
+    }
+  },
+  env: {
+    es6: true,
+    es2017: true,
+    es2020: true,
+    es2021: true,
+  },
   overrides: [
     {
       files: ['*.{ts,tsx,mts,cts}'],
@@ -59,6 +73,13 @@ module.exports = {
 
       rules: {
         eqeqeq: 'error',
+      },
+    },
+
+    {
+      files: ['.eslintrc.js', '.prettierrc.js', 'jest.config.js', 'node-libs/**'],
+      env: {
+        node: true,
       },
     },
   ],
