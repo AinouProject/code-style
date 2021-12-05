@@ -6,7 +6,7 @@
     "src"
   ],
   "bin": {
-    "ainou-code-style": "./postinstall.js"
+    "ainou-code-style": "./src/postinstall.js"
   },
   "publishConfig": {
     "access": "public",
