@@ -8,6 +8,10 @@
   "bin": {
     "ainou-code-style": "./postinstall.js"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.16.0",
