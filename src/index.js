@@ -40,7 +40,7 @@ module.exports = {
       ],
 
       rules: {
-        eqeqeq: 'error',
+        eqeqeq: ['error', 'smart'],
         'no-undef': 'off',
         '@typescript-eslint/interface-name-prefix': 'off',
         '@typescript-eslint/explicit-function-return-type': 'off',
@@ -79,7 +79,7 @@ module.exports = {
       ],
 
       rules: {
-        eqeqeq: 'error',
+        eqeqeq: ['error', 'smart'],
         'no-undef': 'off',
       },
     },
