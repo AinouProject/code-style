@@ -1,7 +1,16 @@
 #!/usr/bin/env node
 
+const nodeVersion = '16'
+
 const { spawnSync } = require('child_process')
 const fs = require('fs')
+
+if (fs.existsSync('.yarnrc.yml')) {
+  spawnSync('yarn', ['config', 'set', 'enableTelemetry', 'false'], { stdio: 'inherit' })
+  spawnSync('yarn', ['config', 'set', 'nodeLinker', 'node-modules'], { stdio: 'inherit' })
+  spawnSync('yarn', ['plugin', 'import', 'typescript'], { stdio: 'inherit' })
+  spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
+}
 
 spawnSync('yarn', [
   'add',
@@ -9,7 +18,9 @@ spawnSync('yarn', [
   'eslint',
   '@typescript-eslint/parser',
   '@typescript-eslint/eslint-plugin',
-  'prettier'
+  'prettier',
+  'typescript',
+  `@types/node@${nodeVersion}`,
 ], { stdio: 'inherit' })
 
 fs.mkdirSync('.vscode', { recursive: true })
@@ -72,11 +83,31 @@ if (tsConfig.compilerOptions.declaration) {
 fs.writeFileSync('tsconfig.json', JSON.stringify(tsConfig, null, 2))
 
 if (!fs.existsSync('.nvmrc')) {
-  fs.writeFileSync('.nvmrc', '16')
+  fs.writeFileSync('.nvmrc', `${nodeVersion}`)
 }
 
-if (fs.existsSync('.yarnrc.yml')) {
-  spawnSync('yarn', ['config', 'set', 'nodeLinker', 'node-modules'], { stdio: 'inherit' })
-  spawnSync('yarn', ['plugin', 'import', 'typescript'], { stdio: 'inherit' })
-  spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
+if (!fs.existsSync('.gitignore')) {
+  fs.writeFileSync('.gitignore', '')
+}
+
+const gitIgnores = fs.readFileSync('.gitignore').toString().split('\n')
+
+if (gitIgnores.includes('!/.yarn/cache')) {
+  gitIgnores.splice(gitIgnores.indexOf('!/.yarn/cache'), 1, '# !.yarn/cache')
+}
+
+if (gitIgnores.includes('#/.pnp.*')) {
+  gitIgnores.splice(gitIgnores.indexOf('#/.pnp.*'), 1, '/.pnp.*')
+}
+
+if (gitIgnores.includes('# Swap the comments on the following lines if you don\'t wish to use zero-installs')) {
+  gitIgnores.splice(gitIgnores.indexOf('# Swap the comments on the following lines if you don\'t wish to use zero-installs'), 1, '# code-style: yarn has been configured not to use zero-installs')
+}
+
+if (!gitIgnores.includes('node_modules')) {
+  gitIgnores.push('node_modules')
+}
+
+if (!gitIgnores.includes('dist')) {
+  gitIgnores.push('dist')
 }
