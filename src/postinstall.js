@@ -111,3 +111,5 @@ if (!gitIgnores.includes('node_modules')) {
 if (!gitIgnores.includes('dist')) {
   gitIgnores.push('dist')
 }
+
+fs.writeFileSync('.gitignore', gitIgnores.join('\n'))
