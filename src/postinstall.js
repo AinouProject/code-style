@@ -74,3 +74,9 @@ fs.writeFileSync('tsconfig.json', JSON.stringify(tsConfig, null, 2))
 if (!fs.existsSync('.nvmrc')) {
   fs.writeFileSync('.nvmrc', '16')
 }
+
+if (fs.existsSync('.yarnrc.yml')) {
+  spawnSync('yarn', ['config', 'set', 'nodeLinker', 'node-modules'], { stdio: 'inherit' })
+  spawnSync('yarn', ['plugin', 'import', 'typescript'], { stdio: 'inherit' })
+  spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
+}
