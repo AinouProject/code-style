@@ -12,44 +12,79 @@ if (fs.existsSync('.yarnrc.yml')) {
   spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
 }
 
-spawnSync('yarn', [
-  'add',
-  '-D',
-  'eslint',
-  '@typescript-eslint/parser',
-  '@typescript-eslint/eslint-plugin',
-  'prettier',
-  'typescript',
-  `@types/node@${nodeVersion}`,
-], { stdio: 'inherit' })
+const isPackageRoot = fs.existsSync('package.json')
 
-fs.mkdirSync('.vscode', { recursive: true })
-if (!fs.existsSync('.vscode/settings.json')) {
-  fs.writeFileSync('.vscode/settings.json', JSON.stringify({}, null, 2))
-}
+if (isPackageRoot) {
+  spawnSync('yarn', [
+    'add',
+    '-D',
+    'eslint',
+    '@typescript-eslint/parser',
+    '@typescript-eslint/eslint-plugin',
+    'prettier',
+    'typescript',
+    `@types/node@${nodeVersion}`,
+  ], { stdio: 'inherit' })
 
-const settings = JSON.parse(fs.readFileSync('.vscode/settings.json').toString())
-settings['typescript.tsdk'] = './node_modules/typescript/lib'
-settings['editor.codeActionsOnSave'] = { 'source.fixAll': true }
-settings['editor.defaultFormatter'] = 'esbenp.prettier-vscode'
-settings['editor.formatOnSave'] = true
-
-fs.writeFileSync('.vscode/settings.json', JSON.stringify(settings, null, 2))
-
-fs.writeFileSync('.prettierrc', `{
-  "singleQuote": true,
-  "trailingComma": "all",
-  "semi": false
-}`)
-
-fs.writeFileSync('.eslintrc.js', `module.exports = {
-  root: true,
-  extends: require.resolve('@ainou/code-style'),
-  parserOptions: {
-    // tsconfigRootDir: __dirname,
-    // project: ['./tsconfig.eslint.json'],
+  fs.mkdirSync('.vscode', { recursive: true })
+  if (!fs.existsSync('.vscode/settings.json')) {
+    fs.writeFileSync('.vscode/settings.json', JSON.stringify({}, null, 2))
   }
-}`)
+
+  const settings = JSON.parse(fs.readFileSync('.vscode/settings.json').toString())
+  settings['typescript.tsdk'] = './node_modules/typescript/lib'
+  settings['editor.codeActionsOnSave'] = { 'source.fixAll': true }
+  settings['editor.defaultFormatter'] = 'esbenp.prettier-vscode'
+  settings['editor.formatOnSave'] = true
+
+  fs.writeFileSync('.vscode/settings.json', JSON.stringify(settings, null, 2))
+
+  fs.writeFileSync('.prettierrc', `{
+    "singleQuote": true,
+    "trailingComma": "all",
+    "semi": false
+  }`)
+
+  fs.writeFileSync('.eslintrc.js', `module.exports = {
+    root: true,
+    extends: require.resolve('@ainou/code-style'),
+    parserOptions: {
+      // tsconfigRootDir: __dirname,
+      // project: ['./tsconfig.eslint.json'],
+    }
+  }`)
+
+  if (!fs.existsSync('.nvmrc')) {
+    fs.writeFileSync('.nvmrc', `${nodeVersion}`)
+  }
+  if (!fs.existsSync('.gitignore')) {
+    fs.writeFileSync('.gitignore', '')
+  }
+
+  const gitIgnores = fs.readFileSync('.gitignore').toString().split('\n')
+
+  if (gitIgnores.includes('!/.yarn/cache')) {
+    gitIgnores.splice(gitIgnores.indexOf('!/.yarn/cache'), 1, '# !.yarn/cache')
+  }
+
+  if (gitIgnores.includes('#/.pnp.*')) {
+    gitIgnores.splice(gitIgnores.indexOf('#/.pnp.*'), 1, '/.pnp.*')
+  }
+
+  if (gitIgnores.includes('# Swap the comments on the following lines if you don\'t wish to use zero-installs')) {
+    gitIgnores.splice(gitIgnores.indexOf('# Swap the comments on the following lines if you don\'t wish to use zero-installs'), 1, '# code-style: yarn has been configured not to use zero-installs')
+  }
+
+  if (!gitIgnores.includes('node_modules')) {
+    gitIgnores.push('node_modules')
+  }
+
+  if (!gitIgnores.includes('dist')) {
+    gitIgnores.push('dist')
+  }
+
+  fs.writeFileSync('.gitignore', gitIgnores.join('\n'))
+}
 
 if (!fs.existsSync('tsconfig.json')) {
   fs.writeFileSync('tsconfig.json', `{
@@ -81,35 +116,3 @@ if (tsConfig.compilerOptions.declaration) {
 }
 
 fs.writeFileSync('tsconfig.json', JSON.stringify(tsConfig, null, 2))
-
-if (!fs.existsSync('.nvmrc')) {
-  fs.writeFileSync('.nvmrc', `${nodeVersion}`)
-}
-
-if (!fs.existsSync('.gitignore')) {
-  fs.writeFileSync('.gitignore', '')
-}
-
-const gitIgnores = fs.readFileSync('.gitignore').toString().split('\n')
-
-if (gitIgnores.includes('!/.yarn/cache')) {
-  gitIgnores.splice(gitIgnores.indexOf('!/.yarn/cache'), 1, '# !.yarn/cache')
-}
-
-if (gitIgnores.includes('#/.pnp.*')) {
-  gitIgnores.splice(gitIgnores.indexOf('#/.pnp.*'), 1, '/.pnp.*')
-}
-
-if (gitIgnores.includes('# Swap the comments on the following lines if you don\'t wish to use zero-installs')) {
-  gitIgnores.splice(gitIgnores.indexOf('# Swap the comments on the following lines if you don\'t wish to use zero-installs'), 1, '# code-style: yarn has been configured not to use zero-installs')
-}
-
-if (!gitIgnores.includes('node_modules')) {
-  gitIgnores.push('node_modules')
-}
-
-if (!gitIgnores.includes('dist')) {
-  gitIgnores.push('dist')
-}
-
-fs.writeFileSync('.gitignore', gitIgnores.join('\n'))
