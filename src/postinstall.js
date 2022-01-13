@@ -39,3 +39,38 @@ fs.writeFileSync('.eslintrc.js', `module.exports = {
     // project: ['./tsconfig.eslint.json'],
   }
 }`)
+
+if (!fs.existsSync('tsconfig.json')) {
+  fs.writeFileSync('tsconfig.json', `{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "commonjs",
+      "strict": true,
+      "sourceMap": true,
+      "declaration": true,
+      "declarationMap": true,
+      "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "removeComments": false,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "dist",
+      "lib": ["ESNext"]
+    },
+    "include": ["src"]
+  }`)
+}
+
+const tsConfig = JSON.parse(fs.readFileSync('tsconfig.json').toString())
+tsConfig.compilerOptions = tsConfig.compilerOptions || {}
+tsConfig.compilerOptions.strict = true
+tsConfig.compilerOptions.forceConsistentCasingInFileNames = true
+if (tsConfig.compilerOptions.declaration) {
+  tsConfig.compilerOptions.declarationMap = true
+}
+
+fs.writeFileSync('tsconfig.json', JSON.stringify(tsConfig, null, 2))
+
+if (!fs.existsSync('.nvmrc')) {
+  fs.writeFileSync('.nvmrc', '16')
+}
