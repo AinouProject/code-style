@@ -42,7 +42,8 @@ if (isPackageRoot) {
   fs.writeFileSync('.prettierrc', `{
     "singleQuote": true,
     "trailingComma": "all",
-    "semi": false
+    "semi": false,
+    "printWidth": 120
   }`)
 
   fs.writeFileSync('.eslintrc.js', `module.exports = {
@@ -111,6 +112,7 @@ const tsConfig = JSON.parse(fs.readFileSync('tsconfig.json').toString())
 tsConfig.compilerOptions = tsConfig.compilerOptions || {}
 tsConfig.compilerOptions.strict = true
 tsConfig.compilerOptions.forceConsistentCasingInFileNames = true
+tsConfig.compilerOptions.sourceMap = true
 if (tsConfig.compilerOptions.declaration) {
   tsConfig.compilerOptions.declarationMap = true
 }
