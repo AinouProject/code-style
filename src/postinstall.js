@@ -64,12 +64,12 @@ if (isPackageRoot) {
 
   const gitIgnores = fs.readFileSync('.gitignore').toString().split('\n')
 
-  if (gitIgnores.includes('!/.yarn/cache')) {
-    gitIgnores.splice(gitIgnores.indexOf('!/.yarn/cache'), 1, '# !.yarn/cache')
+  if (gitIgnores.includes('!.yarn/cache')) {
+    gitIgnores.splice(gitIgnores.indexOf('!.yarn/cache'), 1, '# !.yarn/cache')
   }
 
-  if (gitIgnores.includes('#/.pnp.*')) {
-    gitIgnores.splice(gitIgnores.indexOf('#/.pnp.*'), 1, '/.pnp.*')
+  if (gitIgnores.includes('#.pnp.*')) {
+    gitIgnores.splice(gitIgnores.indexOf('#.pnp.*'), 1, '.pnp.*')
   }
 
   if (gitIgnores.includes('# Swap the comments on the following lines if you don\'t wish to use zero-installs')) {
