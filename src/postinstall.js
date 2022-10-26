@@ -84,6 +84,20 @@ if (isPackageRoot) {
     gitIgnores.push('dist')
   }
 
+  for (const line in [
+    '.pnp.*',
+    '.yarn/*',
+    '!.yarn/patches',
+    '!.yarn/plugins',
+    '!.yarn/releases',
+    '!.yarn/sdks',
+    '!.yarn/versions'
+  ]) {
+    if (!gitIgnores.includes(line)) {
+      gitIgnores.push(line)
+    }
+  }
+
   fs.writeFileSync('.gitignore', gitIgnores.join('\n'))
 }
 
