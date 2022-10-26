@@ -84,7 +84,7 @@ if (isPackageRoot) {
     gitIgnores.push('dist')
   }
 
-  for (const line in [
+  for (const line of [
     '.pnp.*',
     '.yarn/*',
     '!.yarn/patches',
