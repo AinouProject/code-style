@@ -46,7 +46,7 @@ if (isPackageRoot) {
     "printWidth": 120
   }`)
 
-  fs.writeFileSync('.eslintrc.js', `module.exports = {
+  fs.writeFileSync('.eslintrc.cjs', `module.exports = {
     root: true,
     extends: require.resolve('@ainou/code-style'),
     parserOptions: {
