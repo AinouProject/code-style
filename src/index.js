@@ -57,6 +57,7 @@ module.exports = {
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/require-await': 'warn',
         '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
         'react/self-closing-comp': [
           'error', {
             component: true,
