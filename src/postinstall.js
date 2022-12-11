@@ -110,7 +110,7 @@ if (!fs.existsSync('tsconfig.json')) {
       "sourceMap": true,
       "declaration": true,
       "declarationMap": true,
-      "moduleResolution": "node",
+      "moduleResolution": "Node16",
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "removeComments": false,
