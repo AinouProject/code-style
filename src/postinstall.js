@@ -13,10 +13,11 @@ if (fs.existsSync('.yarnrc.yml')) {
 }
 
 const isPackageRoot = fs.existsSync('package.json')
+let isEsm = false
 
 if (isPackageRoot) {
   const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'))
-  const isEsm = packageJson.type === 'module'
+  isEsm = packageJson.type === 'module'
 
   spawnSync('yarn', [
     'add',
