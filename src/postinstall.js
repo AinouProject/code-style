@@ -15,6 +15,9 @@ if (fs.existsSync('.yarnrc.yml')) {
 const isPackageRoot = fs.existsSync('package.json')
 
 if (isPackageRoot) {
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'))
+  const isEsm = packageJson.type === 'module'
+
   spawnSync('yarn', [
     'add',
     '-D',
@@ -105,12 +108,12 @@ if (!fs.existsSync('tsconfig.json')) {
   fs.writeFileSync('tsconfig.json', `{
     "compilerOptions": {
       "target": "esnext",
-      "module": "commonjs",
+      "module": "${isEsm ? 'node16' : 'commonjs'}",
       "strict": true,
       "sourceMap": true,
       "declaration": true,
       "declarationMap": true,
-      "moduleResolution": "Node16",
+      "moduleResolution": "node16",
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
       "removeComments": false,
