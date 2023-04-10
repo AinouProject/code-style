@@ -68,6 +68,10 @@ if (isPackageRoot) {
 
   const gitIgnores = fs.readFileSync('.gitignore').toString().split('\n')
 
+  if (gitIgnores.includes('.vscode/*')) {
+    gitIgnores.splice(gitIgnores.indexOf('.vscode/*'), 1, '# !.yarn/cache')
+  }
+
   if (gitIgnores.includes('!.yarn/cache')) {
     gitIgnores.splice(gitIgnores.indexOf('!.yarn/cache'), 1, '# !.yarn/cache')
   }
@@ -120,7 +124,8 @@ if (!fs.existsSync('tsconfig.json')) {
       "removeComments": false,
       "forceConsistentCasingInFileNames": true,
       "outDir": "dist",
-      "lib": ["ESNext"]
+      "lib": ["ESNext"],
+      "allowUnreachableCode": true,
     },
     "include": ["src"]
   }`)
