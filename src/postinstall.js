@@ -125,7 +125,7 @@ if (!fs.existsSync('tsconfig.json')) {
       "forceConsistentCasingInFileNames": true,
       "outDir": "dist",
       "lib": ["ESNext"],
-      "allowUnreachableCode": true,
+      "allowUnreachableCode": true
     },
     "include": ["src"]
   }`)
