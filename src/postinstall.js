@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const nodeVersion = '16'
+const nodeVersion = '20'
 
 const { spawnSync } = require('child_process')
 const fs = require('fs')
@@ -44,20 +44,20 @@ if (isPackageRoot) {
   fs.writeFileSync('.vscode/settings.json', JSON.stringify(settings, null, 2))
 
   fs.writeFileSync('.prettierrc', `{
-    "singleQuote": true,
-    "trailingComma": "all",
-    "semi": false,
-    "printWidth": 120
-  }`)
+  "singleQuote": true,
+  "trailingComma": "all",
+  "semi": false,
+  "printWidth": 120
+}`)
 
   fs.writeFileSync('.eslintrc.cjs', `module.exports = {
-    root: true,
-    extends: require.resolve('@ainou/code-style'),
-    parserOptions: {
-      // tsconfigRootDir: __dirname,
-      // project: ['./tsconfig.eslint.json'],
-    }
-  }`)
+  root: true,
+  extends: require.resolve('@ainou/code-style'),
+  parserOptions: {
+    // tsconfigRootDir: __dirname,
+    // project: ['./tsconfig.eslint.json'],
+  }
+}`)
 
   if (!fs.existsSync('.nvmrc')) {
     fs.writeFileSync('.nvmrc', `${nodeVersion}`)
@@ -111,24 +111,24 @@ if (isPackageRoot) {
 
 if (!fs.existsSync('tsconfig.json')) {
   fs.writeFileSync('tsconfig.json', `{
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "${isEsm ? 'node16' : 'commonjs'}",
-      "strict": true,
-      "sourceMap": true,
-      "declaration": true,
-      "declarationMap": true,
-      "moduleResolution": "node16",
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "removeComments": false,
-      "forceConsistentCasingInFileNames": true,
-      "outDir": "dist",
-      "lib": ["ESNext"],
-      "allowUnreachableCode": true
-    },
-    "include": ["src"]
-  }`)
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "${isEsm ? 'node16' : 'commonjs'}",
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "moduleResolution": "node16",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "removeComments": false,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "lib": ["ESNext"],
+    "allowUnreachableCode": true
+  },
+  "include": ["src"]
+}`)
 }
 
 const tsConfig = JSON.parse(fs.readFileSync('tsconfig.json').toString())
