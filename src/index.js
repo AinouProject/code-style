@@ -28,13 +28,14 @@ module.exports = {
 
       plugins: [
         '@typescript-eslint',
-        '@eslint-react'
+        'react',
+        'react-hooks',
       ],
       extends: [
         'eslint:recommended',
-        'plugin:@eslint-react/recommended-legacy',
-        'plugin:@eslint-react/recommended-type-checked-legacy',
+        'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:react-hooks/recommended',
         require.resolve('eslint-config-prettier'),
       ],
 
