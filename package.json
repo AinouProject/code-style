@@ -1,6 +1,6 @@
 {
   "name": "@ainou/code-style",
-  "version": "0.0.29",
+  "version": "0.1.0",
   "main": "src/index.mjs",
   "type": "module",
   "files": [
