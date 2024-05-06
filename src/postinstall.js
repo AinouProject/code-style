@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// @ts-check
+/// <reference types="@types/node" />
+
 const nodeVersion = '20'
 
 const { spawnSync } = require('child_process')
@@ -25,8 +28,6 @@ if (isPackageRoot) {
     'add',
     '-D',
     'eslint',
-    '@typescript-eslint/parser',
-    '@typescript-eslint/eslint-plugin',
     'prettier',
     'typescript',
     `@types/node@${nodeVersion}`,
@@ -51,16 +52,17 @@ if (isPackageRoot) {
   "trailingComma": "all",
   "semi": false,
   "printWidth": 120
-}`)
+}
+`)
 
-  fs.writeFileSync('.eslintrc.cjs', `module.exports = {
-  root: true,
-  extends: require.resolve('@ainou/code-style'),
-  parserOptions: {
-    // tsconfigRootDir: __dirname,
-    // project: ['./tsconfig.eslint.json'],
+  fs.writeFileSync('eslint.config.mjs', `import ainouCodeStyle from '@ainou/code-style'
+
+  export default [...ainouCodeStyle]
+`)
+
+  if (fs.existsSync('.eslintrc.cjs')) {
+    fs.unlinkSync('.eslintrc.cjs')
   }
-}`)
 
   if (!fs.existsSync('.nvmrc')) {
     fs.writeFileSync('.nvmrc', `${nodeVersion}`)
