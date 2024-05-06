@@ -13,7 +13,7 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "devDependencies": {
+  "dependencies": {
     "@eslint/js": ">=9",
     "@types/node": ">=20",
     "eslint": ">=9",
