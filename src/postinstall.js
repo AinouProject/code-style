@@ -5,19 +5,21 @@ const nodeVersion = '20'
 const { spawnSync } = require('child_process')
 const fs = require('fs')
 
-if (fs.existsSync('.yarnrc.yml')) {
-  spawnSync('yarn', ['config', 'set', 'enableTelemetry', 'false'], { stdio: 'inherit' })
-  spawnSync('yarn', ['config', 'set', 'nodeLinker', 'node-modules'], { stdio: 'inherit' })
-  spawnSync('yarn', ['plugin', 'import', 'typescript'], { stdio: 'inherit' })
-  spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
-}
-
 const isPackageRoot = fs.existsSync('package.json')
 let isEsm = false
 
 if (isPackageRoot) {
   const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'))
   isEsm = packageJson.type === 'module'
+
+  const isYarnBerry = fs.existsSync('.yarnrc.yml') || `${packageJson.packageManager}`.startsWith('yarn@')
+
+  if (isYarnBerry) {
+    spawnSync('yarn', ['config', 'set', 'enableTelemetry', 'false'], { stdio: 'inherit' })
+    spawnSync('yarn', ['config', 'set', 'nodeLinker', 'node-modules'], { stdio: 'inherit' })
+    spawnSync('yarn', ['plugin', 'import', 'typescript'], { stdio: 'inherit' })
+    spawnSync('yarn', ['plugin', 'import', 'workspace-tools'], { stdio: 'inherit' })
+  }
 
   spawnSync('yarn', [
     'add',
@@ -39,6 +41,7 @@ if (isPackageRoot) {
   settings['typescript.tsdk'] = './node_modules/typescript/lib'
   settings['editor.codeActionsOnSave'] = { 'source.fixAll': true }
   settings['editor.defaultFormatter'] = 'esbenp.prettier-vscode'
+  settings['search.exclude'] = { '.yarn/': true }
   settings['editor.formatOnSave'] = true
 
   fs.writeFileSync('.vscode/settings.json', JSON.stringify(settings, null, 2))
