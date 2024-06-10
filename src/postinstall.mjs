@@ -3,10 +3,10 @@
 // @ts-check
 /// <reference types="@types/node" />
 
-const nodeVersion = '20'
+import { spawnSync } from 'child_process'
+import * as fs from 'fs'
 
-const { spawnSync } = require('child_process')
-const fs = require('fs')
+const nodeVersion = '20'
 
 const isPackageRoot = fs.existsSync('package.json')
 let isEsm = false
