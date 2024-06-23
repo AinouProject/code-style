@@ -57,7 +57,7 @@ if (isPackageRoot) {
 
   fs.writeFileSync('eslint.config.mjs', `import ainouCodeStyle from '@ainou/code-style'
 
-  export default [...ainouCodeStyle]
+export default [...ainouCodeStyle]
 `)
 
   if (fs.existsSync('.eslintrc.cjs')) {
